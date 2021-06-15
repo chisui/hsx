@@ -1,0 +1,86 @@
+name: hsx
+version: 0.1.0
+
+ghc-options:
+  - -Wall -Werror
+  - -fshow-warning-groups
+  - -Wno-unused-do-bind
+  - -Wno-type-defaults
+  - -Wwarn=unused-top-binds
+  - -Wwarn=unused-local-binds
+  - -Wwarn=unused-matches
+  - -Wwarn=type-defaults
+  - -rtsopts -threaded -O2
+
+executable:
+  source-dirs: src
+  main: Main.hs
+
+dependencies:
+  # essentially standard library
+  - base
+  - text
+  - containers
+  - transformers
+  - mtl
+  - bytestring
+  - time
+  # macros
+  - template-haskell
+  # parser combinators
+  - parsec
+  # others
+  - primitive
+  - hashable
+  - unordered-containers
+  - vector
+  - constraints
+  - semigroupoids
+  - criterion
+
+# enable modern Haskell
+default-extensions:
+  # quality of live
+  - PackageImports
+  - ImportQualifiedPost
+  - LambdaCase
+  - OverloadedStrings
+  - OverloadedLists
+  - TypeApplications
+  - TupleSections
+  - PatternSynonyms
+  - ViewPatterns
+  - InstanceSigs
+  - RecordWildCards
+
+  # deriving
+  - StandaloneDeriving
+  - DerivingStrategies
+  - GeneralizedNewtypeDeriving
+  - EmptyDataDeriving
+  - DerivingVia
+  - DeriveGeneric
+  - DeriveFunctor
+  - DeriveTraversable
+  - DeriveFoldable
+  - DeriveDataTypeable
+  - DeriveLift
+
+  # typesysteme
+  - QuantifiedConstraints
+  - PolyKinds
+  - ExistentialQuantification
+  - GADTs
+  - DataKinds
+  - RankNTypes
+  - MultiParamTypeClasses
+  - FunctionalDependencies
+  - ConstraintKinds
+  - TypeFamilies
+  - TypeFamilyDependencies
+  - TypeOperators
+  - ScopedTypeVariables
+  - FlexibleInstances
+  - FlexibleContexts
+  - UndecidableInstances
+
