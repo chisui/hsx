@@ -3,10 +3,10 @@
   name = drv.name;
   ghc = ghcWithPackages (pkgs: (drv.propagatedBuildInputs ++ drv.buildInputs));
   cabalShim = pkgs.writeScriptBin "cabal" ''
-    trap cleanup SIGINT
     cleanup() {
       rm -f ${name}.cabal
     }
+    trap cleanup SIGINT
     ${hpack}/bin/hpack && PATH=${ghc}/bin:$PATH ${cabal-install}/bin/cabal $@
     cleanup
   '';
@@ -16,16 +16,14 @@
   watch = pkgs.writeScriptBin "watch" ''
     ${pkgs.ghcid}/bin/ghcid -c "${repl}/bin/repl $@"
   '';
-in pkgs.mkShell {
+in pkgs.mkShell rec {
   inherit name;
   buildInputs = [
     cabalShim
     repl
     watch
   ];
-  shellHook = ''
-    HISTFILE=${toString ../.history}
-    export LOCAL_HISTFILE=${toString ../.history}
-  '';
+  HISTFILE = toString ../.history;
+  LOCAL_HISTFILE = HISTFILE;
 }
 
