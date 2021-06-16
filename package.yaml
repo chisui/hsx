@@ -27,16 +27,8 @@ dependencies:
   - time
   # macros
   - template-haskell
-  # parser combinators
-  - parsec
   # others
-  - primitive
-  - hashable
-  - unordered-containers
-  - vector
-  - constraints
-  - semigroupoids
-  - criterion
+  - free
 
 # enable modern Haskell
 default-extensions:
