@@ -1,21 +1,26 @@
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE QuasiQuotes #-}
 module Main where
 
-import "text" Data.Text ( Text )
 import "text" Data.Text.IO qualified as Text
 
 import "this" Web.Render
 import "this" Web.Hsx
-import "this" Web.HsxCtx
 
 
-renderHsxCtx :: HsxCtx (HtmlNode HsxCtx) -> Text
-renderHsxCtx = runRenderS . render
+renderHsxCtx :: Hsx -> IO ()
+renderHsxCtx = Text.putStrLn . runRenderS . render
 
 main :: IO ()
-main = do
-    Text.putStrLn . renderHsxCtx $ do
-        pure $ ElementNode "div" [attr (pure "a") (pure "b")]
-            [ "bla"
-            , "blo"
-            ]
+main = renderHsxCtx [hsx|
+        <div>
+            adsf ${child} bsdf ${"literal"} csdf ${toHtml 12}
+            ${if True
+                then "yes" 
+                else "no"
+            }
+            ${multiple}
+        </div>
+    |]
+  where
+    child = [hsx|<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">link</a>|] :: Hsx
+    multiple = ["a", "b"] :: Hsx

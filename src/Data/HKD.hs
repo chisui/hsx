@@ -19,17 +19,20 @@ instance Alternative f => Monoid (Ap a f) where
     mempty = coerce (empty :: f a)
 
 instance (Applicative f, IsString a) => IsString (Ap a f) where
-    fromString = coerce . pure @f . fromString @a
+    fromString s = coerce (pure @f (fromString @a s))
 
 
 newtype HKL g f = HKL { getHKL :: f [f (g f)] }
 
 instance Applicative f => IsList (HKL g f) where
-    type Item (HKL g f) = f (g f)
-    fromList = HKL . pure
+    type Item (HKL g f) = g f
+    fromList = HKL . pure . fmap pure
     toList = error "can not turn HKL into List!"
 
+instance (Applicative f, IsString (g f)) => IsString (HKL g f) where
+    fromString = HKL . pure . pure . pure . fromString
+
 instance Applicative f => Semigroup (HKL g f) where
-    HKL a <> HKL b = HKL $ liftA2 (<>) a b
+    (<>) = coerce (liftA2 (<>) :: f [f (g f)] ->  f [f (g f)] -> f [f (g f)])
 instance Applicative f => Monoid (HKL g f) where
-    mempty = HKL $ pure []
+    mempty = coerce (pure [] :: f [f (g f)])

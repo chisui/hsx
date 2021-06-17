@@ -1,6 +1,5 @@
-module Web.HsxCtx where
+module Web.Hsx.HsxCtx where
 
-import "base" Data.String ( IsString(..) )
 import "base" Control.Applicative ( liftA2 )
 
 import "free" Control.Monad.Free
@@ -28,9 +27,6 @@ instance Semigroup a => Semigroup (HsxCtx a) where
     (<>) = liftA2 (<>)
 instance Monoid a => Monoid (HsxCtx a) where
     mempty = pure mempty
-
-instance IsString a => IsString (HsxCtx a) where
-    fromString = pure . fromString
 
 instance Renderable a => Renderable (HsxCtx a) where
     render = render1

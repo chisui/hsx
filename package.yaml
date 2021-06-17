@@ -6,6 +6,7 @@ ghc-options:
   - -fshow-warning-groups
   - -Wno-unused-do-bind
   - -Wno-type-defaults
+  - -Wwarn=unused-imports
   - -Wwarn=unused-top-binds
   - -Wwarn=unused-local-binds
   - -Wwarn=unused-matches
@@ -29,6 +30,9 @@ dependencies:
   - template-haskell
   # others
   - free
+  - deepseq
+  - attoparsec
+  - haskell-src-meta
 
 # enable modern Haskell
 default-extensions:
